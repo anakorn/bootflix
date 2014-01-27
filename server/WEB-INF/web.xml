@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+   version="2.5">
+  <description>p2</description>
+  <display-name>p2 name</display-name>
+
+  <resource-ref>
+    <description>
+      Resource reference to a factory for java.sql.Connection
+      instances that may be used for talking to a particular
+      database that is configured in the server.xml file.
+    </description>
+    <res-ref-name>
+      jdbc/TestDB
+    </res-ref-name>
+    <res-type>
+      javax.sql.DataSource
+    </res-type>
+    <res-auth>
+      Container
+    </res-auth>
+  </resource-ref>
+
+  <servlet>
+    <servlet-name>MovieDB</servlet-name>
+    <servlet-class>MovieDB</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Jsonifier</servlet-name>
+    <servlet-class>Jsonifier</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>MovieDB</servlet-name>
+    <url-pattern>/*.json</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Jsonifier</servlet-name>
+    <url-pattern>/jsonifier</url-pattern>
+  </servlet-mapping>
+</web-app>

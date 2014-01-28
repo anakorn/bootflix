@@ -4,7 +4,7 @@ angular.module('bf.Services', []);
 
 angular.module('bf.Controllers', ['bf.Services']);
 
-angular.module('bf.Directives', []);
+angular.module('bf.Directives', ['bf.Services']);
 
 angular.module('bf.App', [
   'ngCookies',
@@ -13,7 +13,7 @@ angular.module('bf.App', [
   'ngRoute',
   'bf.Controllers',
   // 'bf.Services',
-  // 'bf.Directives'
+  'bf.Directives'
 ])
 
 .config(['$routeProvider', function ($routeProvider) {
@@ -22,11 +22,12 @@ angular.module('bf.App', [
       templateUrl: 'views/main.html',
       controller: 'MainCtrl'
     })
+    .when('/results', {
+      templateUrl: 'views/search_results.html',
+      controller: 'SearchResultsCtrl'
+    })
     .when('/search', {
       templateUrl: 'views/search_adv.html',
-    })
-    .when('/search/:searchTerms*', {
-      templateUrl: 'views/search_results.html',
     })
     .when('/stars', {
       templateUrl: 'views/stars.html',

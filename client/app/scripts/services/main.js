@@ -9,6 +9,12 @@ angular.module('bf.Services')
       .error(errorCb);
   };
 
+  this.getMovieById = function(id, successCb, errorCb) {
+    this.getMovies({
+      id: id
+    }, successCb, errorCb);
+  };
+
   function formatUrl(table, options) {
     var url = 'http://localhost:8080/p2/' + table + '.json';
 
@@ -25,4 +31,30 @@ angular.module('bf.Services')
     console.log('JSON query: ' + url);
     return url;
   }
+
+}])
+
+.service('Cart', [function() {
+  this.add = function(id) {
+    ids.push(id);
+  };
+
+  this.remove = function(id) {
+    ids.splice(ids.indexOf(id), 1);
+  };
+
+  this.contains = function(id) {
+    return ids.indexOf(id) !== -1;
+  };
+
+  this.getCount = function() {
+    return ids.length;
+  };
+
+  this.getIds = function() {
+    return ids;
+  };
+
+  var ids = [];
+
 }]);

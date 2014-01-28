@@ -1,6 +1,12 @@
-<h1>Bootflix, we got that booty</h1>
+<bf-menu-bar ng-controller="MenuBarCtrl" cart-count="{{getCartCount()}}"></bf-menu-bar>
 
-<form>
+<div class="container">
+  <h1>Bootflix, we got that booty</h1>
+  <bf-search-bar></bf-search-bar>
+
+</div>
+
+<!-- <form>
   <div class="form-group">
     <label for="search-title">Search by title:</label>
     <input type="text" name="search-title" ng-model="searchTitle">
@@ -16,9 +22,4 @@
   </div>
   <button class="btn btn-default" type="submit" ng-click="doSearch()">Search</button>
 </form>
-
-<ul class="list-group">
-  <li class="list-group-item" ng-repeat="movie in movies">
-    <h3><a href="#/movies/{{movie['title'].substring(0, 30)}}">{{movie['title']}} ({{movie['year']}})</a></h3>
-  </li>
-</ul> 
+ -->

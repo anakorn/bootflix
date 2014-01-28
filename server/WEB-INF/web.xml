@@ -35,7 +35,7 @@
 
   <servlet-mapping>
     <servlet-name>MovieDB</servlet-name>
-    <url-pattern>/*.json</url-pattern>
+    <url-pattern>/movies.json</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

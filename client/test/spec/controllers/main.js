@@ -3,7 +3,7 @@
 describe('Controller: MainCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('clientApp'));
+  beforeEach(module('bf.App'));
 
   var MainCtrl,
     scope;
@@ -16,7 +16,12 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('should not crash when xhr\'ing', function () {
+    scope.doSearch({
+      limit: 1
+    }, function(response) {
+      console.log(response.results);
+      // expect(response.results.length).toBe(1);
+    });
   });
 });

@@ -28,32 +28,45 @@ public class MovieDB extends HttpServlet
   throws ServletException, IOException {
 
     Connection connection = null;
+    PreparedStatement statement = null;
+
     try {
       connection = dataSource.getConnection();
 
-      PreparedStatement statement = connection.prepareStatement(
-        "SELECT * FROM movies " +
-        "WHERE title LIKE ? " +
-        "AND year LIKE ? " +
-        "AND director LIKE ? " +
-        "AND banner_url LIKE ? " +
-        "AND trailer_url LIKE ? " +
-        "LIMIT ?"
-      );
+      // If movie ID specified, it takes precedence over other parameters
+      String queryId = request.getParameter("id");
+      if (queryId != null && !queryId.isEmpty()) {
+        statement = connection.prepareStatement(
+          "SELECT * FROM movies " +
+          "WHERE id = ?"
+        );
+        statement.setInt(1, Integer.valueOf(queryId));
 
-      String queryTitle = request.getParameter("title");
-      String queryYear = request.getParameter("year");
-      String queryDirector = request.getParameter("director");
-      String queryBannerUrl = request.getParameter("banner_url");
-      String queryTrailerUrl = request.getParameter("trailer_url");
-      String queryLimit = request.getParameter("limit");
+      } else {
+        statement = connection.prepareStatement(
+          "SELECT * FROM movies " +
+          "WHERE title LIKE ? " +
+          "AND year LIKE ? " +
+          "AND director LIKE ? " +
+          "AND banner_url LIKE ? " +
+          "AND trailer_url LIKE ? " +
+          "LIMIT ?"
+        );
 
-      statement.setString(1, queryTitle == null || queryTitle.isEmpty() ? "%" : "%" + queryTitle + "%");
-      statement.setString(2, queryYear == null || queryYear.isEmpty() ? "%" : "%" + queryYear + "%");
-      statement.setString(3, queryDirector == null || queryDirector.isEmpty() ? "%" : "%" + queryDirector + "%");
-      statement.setString(4, queryBannerUrl == null || queryBannerUrl.isEmpty() ? "%" : "%" + queryBannerUrl + "%");
-      statement.setString(5, queryTrailerUrl == null || queryTrailerUrl.isEmpty() ? "%" : "%" + queryTrailerUrl + "%");
-      statement.setInt(6, queryLimit == null || queryLimit.isEmpty() ? 25 : Integer.valueOf(queryLimit));
+        String queryTitle = request.getParameter("title");
+        String queryYear = request.getParameter("year");
+        String queryDirector = request.getParameter("director");
+        String queryBannerUrl = request.getParameter("banner_url");
+        String queryTrailerUrl = request.getParameter("trailer_url");
+        String queryLimit = request.getParameter("limit");
+
+        statement.setString(1, queryTitle == null || queryTitle.isEmpty() ? "%" : "%" + queryTitle + "%");
+        statement.setString(2, queryYear == null || queryYear.isEmpty() ? "%" : "%" + queryYear + "%");
+        statement.setString(3, queryDirector == null || queryDirector.isEmpty() ? "%" : "%" + queryDirector + "%");
+        statement.setString(4, queryBannerUrl == null || queryBannerUrl.isEmpty() ? "%" : "%" + queryBannerUrl + "%");
+        statement.setString(5, queryTrailerUrl == null || queryTrailerUrl.isEmpty() ? "%" : "%" + queryTrailerUrl + "%");
+        statement.setInt(6, queryLimit == null || queryLimit.isEmpty() ? 25 : Integer.valueOf(queryLimit));
+      }
 
       // Perform the query
       ResultSet rs = statement.executeQuery();

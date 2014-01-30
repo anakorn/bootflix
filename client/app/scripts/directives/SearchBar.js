@@ -2,16 +2,17 @@
 
 angular.module('bf.Directives')
 
-.directive('bfSearchBar', ['$location', function($location) {
+.directive('bfSearchBar', ['$location', 'ParamsTrimmer', function($location, ParamsTrimmer) {
   return {
     restrict: 'E',
     scope: {},
     link: function(scope) {
-      scope.query = $location.search().q || '';
-      scope.search = function(query) {
-        $location.path('/results').search({q: query});
+      scope.params = $location.search();
+      scope.search = function() {
+        var params = ParamsTrimmer(scope.params);
+        $location.path('/results').search(params);
       };
     },
-    templateUrl: 'views/SearchBar.html'
+    templateUrl: 'views/templates/SearchBar.html'
   };
 }]);

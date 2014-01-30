@@ -2,7 +2,7 @@
 
 angular.module('bf.Directives')
 
-.directive('bfMovieList', ['Cart', function(Cart) {
+.directive('bfMoviesListing', ['Cart', function(Cart) {
   return {
     restrict: 'E',
     scope: {
@@ -10,8 +10,7 @@ angular.module('bf.Directives')
     },
     link: function(scope) {
       scope.Cart = Cart;
-      Cart.add(901);
     },
-    templateUrl: 'views/MovieList.html'
+    templateUrl: 'views/templates/MoviesListing.html'
   };
 }]);

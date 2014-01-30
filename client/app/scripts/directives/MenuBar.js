@@ -2,12 +2,16 @@
 
 angular.module('bf.Directives')
 
-.directive('bfMenuBar', function() {
+.directive('bfMenuBar', ['$location', 'Cart', function($location, Cart) {
   return {
     restrict: 'E',
-    scope: {
-      cartCount: '@'
+    scope: {},
+    link: function(scope) {
+      scope.path = $location.path();
+      scope.cartCount = function() {
+        return Cart.getCount();
+      };
     },
-    templateUrl: 'views/MenuBar.html'
+    templateUrl: 'views/templates/MenuBar.html'
   };
-});
+}]);

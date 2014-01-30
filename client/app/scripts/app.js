@@ -20,7 +20,6 @@ angular.module('bf.App', [
   $routeProvider
     .when('/', {
       templateUrl: 'views/main.html',
-      controller: 'MainCtrl'
     })
     .when('/results', {
       templateUrl: 'views/search_results.html',

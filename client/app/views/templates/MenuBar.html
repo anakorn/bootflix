@@ -1,0 +1,11 @@
+<div class="header clearfix">
+  <a class="pull-left" href="/"><img src="images/logo-sm.png"></a>
+  <ul class="nav nav-pills pull-right">
+    <li ng-class="{active: path=='/movies'}" title="Browse movies"><a href="#/movies">Movies</a></li>
+    <li ng-class="{active: path=='/stars'}" title="Browse movie stars"><a href="#/stars">Stars</a></li>
+    <li ng-class="{active: path=='/cart'}" title="View shopping cart"><a href="#/cart">
+      <span>{{cartCount()}}&nbsp;</span>
+      <span class="glyphicon glyphicon-shopping-cart"></span>
+    </a></li>
+  </ul>
+</div>

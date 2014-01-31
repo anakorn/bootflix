@@ -20,9 +20,10 @@ angular.module('bf.Services')
     doMovieDbGet('movies', options, successCb, errorCb);
   };
 
-  this.getMoviesById = function(id, successCb, errorCb) {
+  this.getMovieById = function(id, successCb, errorCb) {
     doMovieDbGet('movies', {
-      'id': id
+      'id': id,
+      'limit': 1
     }, successCb, errorCb);
   };
 
@@ -32,22 +33,35 @@ angular.module('bf.Services')
     }, successCb, errorCb);
   };
 
-  this.getMoviesByStar = function(firstName, lastName, successCb, errorCb) {
+  this.getMoviesByStarId = function(starId, successCb, errorCb) {
     doMovieDbGet('movies', {
-      'first_name': firstName,
-      'last_name': lastName
+      'star_id': starId
     }, successCb, errorCb);
   };
 
-  this.getStarsByMovieId = function(movieId, successCb, errorCb) {
+  this.getStars = function(options, successCb, errorCb) {
+    doMovieDbGet('stars', options, successCb, errorCb);
+  };
+
+  this.getStarById = function(id, successCb, errorCb) {
     doMovieDbGet('stars', {
-      'movie_id': movieId
+      'id': id
     }, successCb, errorCb);
   };
 
-  this.getGenresByMovieId = function(movieId, successCb, errorCb) {
+  this.getStarsByMovieId = function(id, successCb, errorCb) {
+    doMovieDbGet('stars', {
+      'movie_id': id
+    }, successCb, errorCb);
+  };
+
+  this.getGenres = function(options, successCb, errorCb) {
+    doMovieDbGet('genres', options, successCb, errorCb);
+  };
+  
+  this.getGenresByMovieId = function(id, successCb, errorCb) {
     doMovieDbGet('genres', {
-      'movie_id': movieId
+      'movie_id': id
     }, successCb, errorCb);
   };
 
@@ -62,37 +76,55 @@ angular.module('bf.Services')
 }])
 
 .service('Cart', [function() {
-  // Make sure to parseInt(id) before using id, because argument may be string ID
+  this.ids = {};
 
-  this.add = function(id) {
-    id = parseInt(id);
-    if (this.contains(id)) {
-      console.log('ERROR: Movie ' + id + ' is already in cart!');
-      return;
-    }
-    ids.push(id);
-    console.log('SUCCESS: Movie ' + id + ' added to cart.');
+  this.getTotalCount = function() {
+    var count = 0;
+    angular.forEach(this.ids, function(val) {
+      count += val;
+    });
+    return count;
   };
+  // this.updateItem = function(id, diff) {
+  //   if (diff > 0) {
+  //     add(id, diff);
+  //   } else if (diff < 0) {
+  //     remove(id, -diff);
+  //   }
+  // };
 
-  this.remove = function(id) {
-    id = parseInt(id);
-    ids.splice(ids.indexOf(id), 1);
-    console.log('SUCCESS: Movie ' + id + ' removed from cart.');
-  };
+  // this.getCopyCount = function(id) {
+  //   return typeof(ids[id]) === 'undefined' ? 0 : ids[id];
+  // };
 
-  this.contains = function(id) {
-    id = parseInt(id);
-    return ids.indexOf(id) !== -1;
-  };
+  // this.getTotalCount = function() {
+  //   return count;
+  // };
 
-  this.getCount = function() {
-    return ids.length;
-  };
+  // this.getIds = function() {
+  //   return ids;
+  // };
 
-  this.getIds = function() {
-    return ids;
-  };
+  // function add(id, num) {
+  //   if (typeof(ids[id]) === 'undefined') {
+  //     ids[id] = num;
+  //   } else {
+  //     ids[id] += num;
+  //   }
+  //   count += num;
+  //   console.log('SUCCESS: Added movie ' + id + '. ' + num + ' =' + ids[id]);
+  // };
 
-  var ids = [];
+  // function remove(id, num) {
+  //   if (ids[id] - num > 0) {
+  //     ids[id] -= num;
+  //     count -= num;
+  //     console.log('SUCCESS: Removed movie ' + id + '. ' + num + ' =' + ids[id]);
+  //   } else if (ids[id] - num === 0) {
+  //     delete ids[id];
+  //     count -= num;
+  //     console.log('SUCCESS: Removed movie ' + id + '. ' + num + ' =' + ids[id]);
+  //   }
+  // };
 
 }]);

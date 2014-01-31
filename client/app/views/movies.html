@@ -1,6 +1,46 @@
 <div class="container">
   <bf-menu-bar></bf-menu-bar>
 
-  <bf-movies-listing movies="movies"></bf-movies-listing>
+  <bf-search-bar></bf-search-bar>
+
+  <div ng-show="movies.length !== 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Director</th>
+          <th>Genre(s)</th>
+          <th>Star(s)</th>
+          <th style="text-align:center" title="Number of copies in your shopping cart"><span class="glyphicon glyphicon-shopping-cart"></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="movie in movies">
+          <td>{{movie.id}}</td>
+          <td><a href="#/movies/{{movie.id}}">{{movie.title}}</a></td>
+          <td>{{movie.year}}</td>
+          <td>{{movie.director}}</td>
+          <td>
+            <span ng-repeat="genre in movie.genres">{{genre.name}}{{$last ? '':', '}}</span>
+          </td>
+          <td>
+            <span ng-repeat="star in movie.stars">{{star.first_name}} {{star.last_name}}{{$last ? '':', '}}</span>
+          </td>
+          <td><bf-cartable-button movie-id="{{movie.id}}"></bf-cartable-button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-danger" ng-show="movies.length === 0">
+    <strong>Oh snap!</strong> No movies were found. :(
+  </div>
+
+  <ul class="pager">
+    <li class="previous" ng-class="{disabled: offset==0}"><a class="btn btn-default" ng-click="prevPage()">&larr; Previous</a></li>
+    <li class="next" ng-class="{disabled: movies.length < limit}"><a class="btn btn-default" ng-click="nextPage()">Next &rarr;</a></li>
+  </ul>
 
 </div>

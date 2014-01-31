@@ -9,8 +9,12 @@ angular.module('bf.Directives')
     link: function(scope) {
       scope.params = $location.search();
       scope.search = function() {
+        scope.params.offset = '';
         var params = ParamsTrimmer(scope.params);
-        $location.path('/results').search(params);
+        $location.path('/movies').search(params);
+      };
+      scope.clearFields = function() {
+        scope.params = {};
       };
     },
     templateUrl: 'views/templates/SearchBar.html'

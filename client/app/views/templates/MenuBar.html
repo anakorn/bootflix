@@ -1,9 +1,21 @@
 <div class="header clearfix">
   <a class="pull-left" href="/"><img src="images/logo-sm.png"></a>
   <ul class="nav nav-pills pull-right">
-    <li ng-class="{active: path=='/movies'}" title="Browse movies"><a href="#/movies">Movies</a></li>
-    <li ng-class="{active: path=='/stars'}" title="Browse movie stars"><a href="#/stars">Stars</a></li>
-    <li ng-class="{active: path=='/cart'}" title="View shopping cart"><a href="#/cart">
+    <li class="dropdown">
+      <a class="dropdown-toggle" title="Browse categories">Browse&nbsp;<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li class="dropdown-header">Movies</li>
+        <li title="Browse all movies"><a href="#/movies">All</a></li>
+
+        <li title="Browse movies by genre"><a ng-click="openGenres()">By genre</a></li>
+        <li title="Browse movies by title"><a ng-click="openTitles()">By title</a></li>
+        
+        <li class="divider"></li>
+        <li class="dropdown-header">Stars</li>
+        <li title="Browse all stars"><a href="#/stars">All</a></li>
+      </ul>
+    </li>
+    <li title="View shopping cart"><a href="#/cart">
       <span>{{cartCount()}}&nbsp;</span>
       <span class="glyphicon glyphicon-shopping-cart"></span>
     </a></li>

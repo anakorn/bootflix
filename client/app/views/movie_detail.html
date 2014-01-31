@@ -1,0 +1,27 @@
+<div class="container">
+
+  <bf-menu-bar></bf-menu-bar>
+  
+  <h1>{{movie.title}}</h1>
+  <img src="{{movie.banner_url}}">
+  <a ng-href="{{movie.trailer_url}}">[Link to the trailer]</a>
+  <p>Year: {{movie.year}}</p>
+  <p>Director: {{movie.director}}</p>
+  <p>Genres:
+    <ul>
+      <li ng-repeat="genre in genres">
+        <a ng-href="#/movies?genre_id={{genre.id}}">{{genre.name}}</a>
+      </li>
+    </ul>
+  </p>
+  <p>Starring:
+    <ul>
+      <li ng-repeat="star in stars">
+        <a ng-href="#/stars/{{star.id}}">{{star.first_name}} {{star.last_name}}</a>
+      </li>
+    </ul>
+  </p>
+
+  <bf-cartable-button movie-id="{{movie.id}}"></bf-cartable-button>
+
+</div>

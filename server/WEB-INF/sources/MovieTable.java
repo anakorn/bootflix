@@ -45,11 +45,13 @@ public class MovieTable extends HttpServlet
       } else {
 
         String queryTitle = request.getParameter("title");
+        String queryStartsWith = request.getParameter("starts_with");
         String queryYear = request.getParameter("year");
         String queryDirector = request.getParameter("director");
         String queryBannerUrl = request.getParameter("banner_url");
         String queryTrailerUrl = request.getParameter("trailer_url");
         String queryStarId = request.getParameter("star_id");
+        String queryGenreId = request.getParameter("genre_id");
 
         String queryLimit = request.getParameter("limit");
         String queryOffset = request.getParameter("offset");
@@ -63,44 +65,69 @@ public class MovieTable extends HttpServlet
             queryOrderBy.equalsIgnoreCase("director");
         }
 
-        // Query not including star name
-        if (queryStarId == null || queryStarId.isEmpty()) {
-
+        if (queryStarId != null && !queryStarId.isEmpty()) {
           statement = connection.prepareStatement(
-            "SELECT * FROM movies " +
-            "WHERE title LIKE ? " +
-            "AND year LIKE ? " +
-            "AND director LIKE ? " +
-            "AND banner_url LIKE ? " +
-            "AND trailer_url LIKE ? " +
-            "LIMIT ? OFFSET ? " +
-            (isOrdered ? "ORDER BY " + queryOrderBy + (Boolean.valueOf(queryDesc) ? " DESC" : "") : "") 
-          );
-
-          statement.setString(1, queryTitle == null || queryTitle.isEmpty() ? "%" : "%" + queryTitle + "%");
-          statement.setString(2, queryYear == null || queryYear.isEmpty() ? "%" : "%" + queryYear + "%");
-          statement.setString(3, queryDirector == null || queryDirector.isEmpty() ? "%" : "%" + queryDirector + "%");
-          statement.setString(4, queryBannerUrl == null || queryBannerUrl.isEmpty() ? "%" : "%" + queryBannerUrl + "%");
-          statement.setString(5, queryTrailerUrl == null || queryTrailerUrl.isEmpty() ? "%" : "%" + queryTrailerUrl + "%");
-          statement.setInt(6, queryLimit == null || queryLimit.isEmpty() ? 10 : Integer.valueOf(queryLimit));
-          statement.setInt(7, queryOffset == null || queryOffset.isEmpty() ? 0 : Integer.valueOf(queryOffset));
-
-        } else {
-
-          statement = connection.prepareStatement(
-            "SELECT movies.* FROM JOIN (SELECT * FROM stars_in_movies WHERE star_id = ?) m_s " +
+            "SELECT movies.* FROM movies JOIN (SELECT * FROM stars_in_movies WHERE star_id = ?) m_s " +
             "WHERE m_s.movie_id = movies.id " +
+            "AND title LIKE ? " +
             "AND title LIKE ? " +
             "AND year LIKE ? " +
             "AND director LIKE ? " +
             "AND banner_url LIKE ? " +
             "AND trailer_url LIKE ? " +
-            "LIMIT ? OFFSET ? " +
-            (isOrdered ? "ORDER BY " + queryOrderBy + (Boolean.valueOf(queryDesc) ? " DESC" : "") : "") 
+            // (isOrdered ? "ORDER BY " + queryOrderBy + (Boolean.valueOf(queryDesc) ? " DESC " : "") : "") +
+            "LIMIT ? OFFSET ?"
           );
 
           statement.setInt(1, queryStarId == null || queryStarId.isEmpty() ? -1 : Integer.valueOf(queryStarId));
           statement.setString(2, queryTitle == null || queryTitle.isEmpty() ? "%" : "%" + queryTitle + "%");
+          statement.setString(3, queryStartsWith == null || queryStartsWith.isEmpty() ? "%" : queryStartsWith + "%");
+          statement.setString(4, queryYear == null || queryYear.isEmpty() ? "%" : "%" + queryYear + "%");
+          statement.setString(5, queryDirector == null || queryDirector.isEmpty() ? "%" : "%" + queryDirector + "%");
+          statement.setString(6, queryBannerUrl == null || queryBannerUrl.isEmpty() ? "%" : "%" + queryBannerUrl + "%");
+          statement.setString(7, queryTrailerUrl == null || queryTrailerUrl.isEmpty() ? "%" : "%" + queryTrailerUrl + "%");
+          statement.setInt(8, queryLimit == null || queryLimit.isEmpty() ? 10 : Integer.valueOf(queryLimit));
+          statement.setInt(9, queryOffset == null || queryOffset.isEmpty() ? 0 : Integer.valueOf(queryOffset));
+
+        } else if (queryGenreId != null && !queryGenreId.isEmpty()) {
+          statement = connection.prepareStatement(
+            "SELECT movies.* FROM movies JOIN (SELECT * FROM genres_in_movies WHERE genre_id = ?) g_m " +
+            "WHERE g_m.movie_id = movies.id " +
+            "AND title LIKE ? " +
+            "AND title LIKE ? " +
+            "AND year LIKE ? " +
+            "AND director LIKE ? " +
+            "AND banner_url LIKE ? " +
+            "AND trailer_url LIKE ? " +
+            // (isOrdered ? "ORDER BY " + queryOrderBy + (Boolean.valueOf(queryDesc) ? " DESC " : "") : "") +
+            "LIMIT ? OFFSET ?"
+          );
+
+          statement.setInt(1, queryGenreId == null || queryGenreId.isEmpty() ? -1 : Integer.valueOf(queryGenreId));
+          statement.setString(2, queryTitle == null || queryTitle.isEmpty() ? "%" : "%" + queryTitle + "%");
+          statement.setString(3, queryStartsWith == null || queryStartsWith.isEmpty() ? "%" : queryStartsWith + "%");
+          statement.setString(4, queryYear == null || queryYear.isEmpty() ? "%" : "%" + queryYear + "%");
+          statement.setString(5, queryDirector == null || queryDirector.isEmpty() ? "%" : "%" + queryDirector + "%");
+          statement.setString(6, queryBannerUrl == null || queryBannerUrl.isEmpty() ? "%" : "%" + queryBannerUrl + "%");
+          statement.setString(7, queryTrailerUrl == null || queryTrailerUrl.isEmpty() ? "%" : "%" + queryTrailerUrl + "%");
+          statement.setInt(8, queryLimit == null || queryLimit.isEmpty() ? 10 : Integer.valueOf(queryLimit));
+          statement.setInt(9, queryOffset == null || queryOffset.isEmpty() ? 0 : Integer.valueOf(queryOffset));
+
+        } else {
+          statement = connection.prepareStatement(
+            "SELECT * FROM movies " +
+            "WHERE title LIKE ? " +
+            "AND title LIKE ? " +
+            "AND year LIKE ? " +
+            "AND director LIKE ? " +
+            "AND banner_url LIKE ? " +
+            "AND trailer_url LIKE ? " +
+            // (isOrdered ? "ORDER BY " + queryOrderBy + (Boolean.valueOf(queryDesc) ? " DESC " : "") : "") +
+            "LIMIT ? OFFSET ?"
+          );
+
+          statement.setString(1, queryTitle == null || queryTitle.isEmpty() ? "%" : "%" + queryTitle + "%");
+          statement.setString(2, queryStartsWith == null || queryStartsWith.isEmpty() ? "%" : queryStartsWith + "%");
           statement.setString(3, queryYear == null || queryYear.isEmpty() ? "%" : "%" + queryYear + "%");
           statement.setString(4, queryDirector == null || queryDirector.isEmpty() ? "%" : "%" + queryDirector + "%");
           statement.setString(5, queryBannerUrl == null || queryBannerUrl.isEmpty() ? "%" : "%" + queryBannerUrl + "%");

@@ -7,6 +7,7 @@ angular.module('bf.Controllers', ['bf.Services']);
 angular.module('bf.Directives', ['bf.Services']);
 
 angular.module('bf.App', [
+  'ui.bootstrap',
   'ngCookies',
   // 'ngResource',
   'ngSanitize',
@@ -21,27 +22,25 @@ angular.module('bf.App', [
     .when('/', {
       templateUrl: 'views/main.html',
     })
-    .when('/results', {
-      templateUrl: 'views/search_results.html',
-      controller: 'SearchResultsCtrl'
-    })
-    .when('/search', {
-      templateUrl: 'views/search_adv.html',
-    })
     .when('/stars', {
       templateUrl: 'views/stars.html',
+      controller: 'StarsCtrl'
     })
-    .when('/stars/:star', {
+    .when('/stars/:id', {
       templateUrl: 'views/star_detail.html',
+      controller: 'StarDetailCtrl'
     })
     .when('/movies', {
       templateUrl: 'views/movies.html',
+      controller: 'MoviesCtrl'
     })
-    .when('/movies/:movie', {
+    .when('/movies/:id', {
       templateUrl: 'views/movie_detail.html',
+      controller: 'MovieDetailCtrl'
     })
     .when('/cart', {
       templateUrl: 'views/cart.html',
+      controller: 'CartCtrl'
     })
     .when('/cart/checkout', {
       templateUrl: 'views/checkout.html',

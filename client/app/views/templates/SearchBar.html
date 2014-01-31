@@ -1,8 +1,8 @@
  <form>
   <div class="input-group input-group-lg">
-    <input type="text" class="form-control" placeholder="Search..." ng-model="params.q" autofocus>
+    <input type="text" class="form-control" placeholder="Search by movie title..." ng-model="params.title" autofocus>
     <span class="input-group-btn">
-      <button class="btn btn-default" type="submit" title="Search" ng-click="search()"><span class="glyphicon glyphicon-search"></span></button>
+      <button class="btn btn-primary" type="submit" title="Search" ng-click="search()"><span class="glyphicon glyphicon-search"></span></button>
       <button class="btn btn-default" ng-click="showOptions = !showOptions" ng-class="{active: showOptions}" title="Search options" style="border-left: none"><span class="glyphicon glyphicon-cog"></span></button>
     </span>
   </div>
@@ -13,9 +13,9 @@
 
     <form class="form-horizontal">
       <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">Title</label>
+        <label for="startsWith" class="col-sm-2 control-label">Starts with</label>
         <div class="col-sm-10">
-          <input type="text" name="title" class="form-control" placeholder="By movie title..." ng-model="params.title">
+          <input type="text" name="startsWith" class="form-control" placeholder="By title beginning with..." ng-model="params.starts_with">
         </div>
       </div>
       <div class="form-group">
@@ -33,20 +33,30 @@
       <div class="form-group">
         <label for="starFirstName" class="col-sm-2 control-label">Star</label>
         <div class="col-sm-5">
-          <input type="text" name="starFirstName" class="form-control" placeholder="By star's first name..." ng-model="params.firstName">
+          <input type="text" name="starFirstName" class="form-control" placeholder="By star's first name..." ng-model="params.first_name">
         </div>
         <div class="col-sm-5">
-          <input type="text" name="starLastName" class="form-control" placeholder="By star's last name..." ng-model="params.lastName">
+          <input type="text" name="starLastName" class="form-control" placeholder="By star's last name..." ng-model="params.last_name">
         </div>
       </div>
       <div class="form-group">
-
-        <div class="col-sm-offset-2 col-sm-10">
-
-          <button type="submit" class="btn btn-default" ng-click="search()">Search</button>
-
+        <label for="limit" class="col-sm-2 control-label">Results</label>
+        <div class="col-sm-2">
+          <select name="limit" class="form-control" ng-model="params.limit">
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+            <option>100</option>
+          </select>
         </div>
-
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-2">
+          <button type="submit" class="btn btn-primary" ng-click="search()">Search</button>
+        </div>
+        <div class="col-sm-2">
+          <button class="btn btn-default" ng-click="clearFields()">Reset</button>
+        </div>
       </div>
     </form>
 

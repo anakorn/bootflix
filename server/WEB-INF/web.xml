@@ -29,6 +29,14 @@
     <servlet-class>MovieTable</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>StarTable</servlet-name>
+    <servlet-class>StarTable</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>GenreTable</servlet-name>
+    <servlet-class>GenreTable</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>Jsonifier</servlet-name>
     <servlet-class>Jsonifier</servlet-class>
   </servlet>
@@ -36,6 +44,14 @@
   <servlet-mapping>
     <servlet-name>MovieTable</servlet-name>
     <url-pattern>/movies.json</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StarTable</servlet-name>
+    <url-pattern>/stars.json</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GenreTable</servlet-name>
+    <url-pattern>/genres.json</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

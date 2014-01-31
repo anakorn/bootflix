@@ -1,0 +1,16 @@
+<div class="container">
+  
+  <bf-menu-bar></bf-menu-bar>
+
+  <h1>{{star.first_name}} {{star.last_name}}</h1>
+  <img src="{{star.photo_url}}">
+  <p>Date of birth: {{star.dob}}</p>
+  <p>Movies:
+    <ul>
+      <li ng-repeat="movie in movies">
+        <a ng-href="#/movies/{{movie.id}}">{{movie.title}}</a> ({{movie.year}})
+      </li>
+    </ul>
+  </p>
+
+</div>

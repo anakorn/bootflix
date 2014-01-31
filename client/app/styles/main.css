@@ -77,3 +77,6 @@ body {
     border-bottom: 0;
   }
 }
+
+/* UI Bootstrap Angular alternative to empty hrefs to emulate links */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

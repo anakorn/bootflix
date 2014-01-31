@@ -1,0 +1,32 @@
+<div class="container">
+  <bf-menu-bar></bf-menu-bar>
+
+  <div ng-show="movies.length !== 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Year</th>
+          <th style="text-align:center" title="Number of copies in your shopping cart"><span class="glyphicon glyphicon-shopping-cart"></span></th>
+          <th style="text-align:center" title="Remove this movie from your cart">Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="movie in movies">
+          <td><a href="#/movies/{{movie.id}}">{{movie.title}}</a></td>
+          <td>{{movie.year}}</td>
+          <td><bf-cartable-button movie-id="{{movie.id}}"></bf-cartable-button></td>
+          <td style="text-align:center">
+            <button class="btn btn-sm btn-danger" ng-click="remove(movie.id)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-warning" ng-show="movies.length === 0">
+    <strong>Oh no!</strong> It seems you haven't added any items to your cart yet! Head over to the <a href="/">main page</a> to search for a specific movie, or start <a href="#/movies">browsing movies</a> right away.
+  </div>
+</div>
